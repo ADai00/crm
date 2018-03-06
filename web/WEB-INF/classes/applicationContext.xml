@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+        <!-- 加载属性文件 -->
+        <context:property-placeholder location="classpath:db.properties"/>
+
+        <context:component-scan base-package="edu.hnie"/>
+       <!-- &lt;!&ndash; 支持spring注解 &ndash;&gt;
+        <context:annotation-config/>-->
+
+        <!-- 配置数据源 -->
+        <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+                <property name="driverClass" value="${jdbc.driverClass}"/>
+                <property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>
+                <property name="user" value="${jdbc.user}"/>
+                <property name="password" value="${jdbc.password}"/>
+        </bean>
+
+        <!--配置sessionFactory-->
+        <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+                <property name="dataSource" ref="dataSource"/>
+                <property name="configLocations" value="classpath:hibernate.cfg.xml"/>
+        </bean>
+
+
+
+        <bean id="userAction" class="edu.hnie.crm.user.web.action.UserAction" scope="prototype">
+                <property name="userService" ref="userService"/>
+        </bean>
+
+        <bean id="userService" class="edu.hnie.crm.user.Service.Impl.UserServiceImpl">
+                <property name="userDao" ref="userDao"/>
+        </bean>
+
+        <bean id="userDao" class="edu.hnie.crm.user.dao.Impl.UserDaoImpl">
+                <property name="hibernateTemplate" ref="hibernateTemplate"/>
+        </bean>
+
+        <bean id="customerAction" class="edu.hnie.crm.customer.web.action.CustomerAction" scope="prototype">
+                <property name="customerService" ref="customerService"/>
+                <property name="dictService" ref="dictService"/>
+        </bean>
+
+        <bean id="customerService" class="edu.hnie.crm.customer.service.Impl.CustomerServiceImpl">
+                <property name="customerDao" ref="customerDao"/>
+        </bean>
+
+        <bean id="customerDao" class="edu.hnie.crm.customer.dao.Impl.CustomerDaoImpl">
+                <property name="hibernateTemplate" ref="hibernateTemplate"/>
+        </bean>
+
+        <bean id="linkManAction" class="edu.hnie.crm.linkman.web.action.LinkManAction">
+                <property name="linkManService" ref="linkManService"/>
+                <property name="customerService" ref="customerService"/>
+        </bean>
+
+        <bean id="linkManService" class="edu.hnie.crm.linkman.service.Impl.LinkManServiceImpl">
+                <property name="linkManDao" ref="linkManDao"/>
+        </bean>
+
+        <bean id="linkManDao" class="edu.hnie.crm.linkman.dao.Impl.LinkManDaoImpl">
+                <property name="hibernateTemplate" ref="hibernateTemplate"/>
+        </bean>
+
+        <bean id="visitAction" class="edu.hnie.crm.salevisit.web.action.VisitAction" scope="prototype">
+                <property name="visitService" ref="visitService"/>
+                <property name="userService" ref="userService"/>
+                <property name="customerService" ref="customerService"/>
+        </bean>
+
+        <bean id="visitService" class="edu.hnie.crm.salevisit.service.Impl.VisitServiceImpl">
+                <property name="visitDao" ref="visitDao"/>
+        </bean>
+
+        <bean id="visitDao" class="edu.hnie.crm.salevisit.dao.Impl.VisitDaoImpl">
+                <property name="hibernateTemplate" ref="hibernateTemplate"/>
+        </bean>
+
+        <bean id="dictService" class="edu.hnie.crm.customer.service.Impl.DictServiceImpl">
+                <property name="dictDao" ref="dictDao"/>
+        </bean>
+
+        <bean id="dictDao" class="edu.hnie.crm.customer.dao.Impl.DictDaoImpl">
+                <property name="hibernateTemplate" ref="hibernateTemplate"/>
+        </bean>
+
+        <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+                <property name="sessionFactory" ref="sessionFactory"/>
+        </bean>
+
+        <!-- 配置事务-->
+        <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+                <property name="sessionFactory" ref="sessionFactory"/>
+        </bean>
+        <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>

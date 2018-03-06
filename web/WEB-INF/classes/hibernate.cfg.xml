@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+     <!--   &lt;!&ndash;第一步 配置数据库信息  必须的&ndash;&gt;
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql:///hibernate_day03</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password"></property>-->
+
+
+        <!-- 第二部配置hibernate信息 可选的-->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- <property name="hibernate.current_session_context_class">thread</property>-->
+
+        <!-- 第三步 映入映射文件-->
+        <mapping resource="edu/hnie/crm/user/domain/User.hbm.xml"/>
+        <mapping resource="edu/hnie/crm/customer/domain/Customer.hbm.xml"/>
+        <mapping resource="edu/hnie/crm/linkman/domain/LinkMan.hbm.xml"/>
+        <mapping resource="edu/hnie/crm/salevisit/domain/Visit.hbm.xml"/>
+        <mapping resource="edu/hnie/crm/customer/domain/Dict.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>

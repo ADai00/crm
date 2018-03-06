@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <constant name="struts.multipart.maxSize" value="209715200"/>
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
+    <package name="" extends="struts-default" namespace="/">
+        <action name="user_*" class="userAction" method="{1}">
+            <result name="loginSuccess">index.jsp</result>
+            <result name="toLoginPage">login.jsp</result>
+        </action>
+
+        <action name="customer_*" class="customerAction" method="{1}">
+            <result name="toAddPage">jsp/customer/add.jsp</result>
+            <result name="add">jsp/success.jsp</result>
+            <result name="list">jsp/customer/list.jsp</result>
+            <result name="delete">jsp/success.jsp</result>
+            <result name="toEditPage">jsp/customer/edit.jsp</result>
+            <result name="update">jsp/success.jsp</result>
+            <result name="limitPage">jsp/customer/limitlist.jsp</result>
+            <result name="listCondition">jsp/customer/list.jsp</result>
+            <result name="toSelectPage">jsp/customer/select.jsp</result>
+            <result name="moreCondition">jsp/customer/list.jsp</result>
+            <result name="countSource">jsp/customer/listSource.jsp</result>
+            <result name="countLevel">jsp/customer/listLevel.jsp</result>
+        </action>
+
+        <action name="linkman_*" class="linkManAction" method="{1}">
+            <result name="toAddPage">jsp/linkman/add.jsp</result>
+            <result name="add">jsp/success.jsp</result>
+            <result name="update">jsp/success.jsp</result>
+            <result name="delete">jsp/success.jsp</result>
+            <result name="findAll">jsp/linkman/list.jsp</result>
+            <result name="toEditPage">jsp/linkman/edit.jsp</result>
+            <result name="input">jsp/error.jsp</result>
+            <result name="toSelectPage">jsp/linkman/select.jsp</result>
+            <result name="moreCondition">jsp/linkman/list.jsp</result>
+        </action>
+
+        <action name="visit_*" class="visitAction" method="{1}">
+            <result name="toAddPage">jsp/salevisit/add.jsp</result>
+            <result name="add">jsp/success.jsp</result>
+            <result name="findAll">jsp/salevisit/list.jsp</result>
+        </action>
+    </package>
+</struts>

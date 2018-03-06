@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="edu.hnie.crm.salevisit.domain.Visit" table="t_visit">
+        <id name="vid" column="vid">
+            <generator class="native"/>
+        </id>
+        <property name="vaddress" column="vaddress" length="30"/>
+        <property name="vcontent" column="vcontent"/>
+
+        <many-to-one name="user" class="edu.hnie.crm.user.domain.User" column="uvid" lazy="false"/>
+        <many-to-one name="customer" class="edu.hnie.crm.customer.domain.Customer" column="cvid" lazy="false"/>
+
+    </class>
+</hibernate-mapping>
