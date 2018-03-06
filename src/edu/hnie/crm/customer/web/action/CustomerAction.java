@@ -39,6 +39,7 @@ public class CustomerAction extends ActionSupport implements ModelDriven<Custome
     public String add(){
         //添加逻辑
         customerService.addCustomer(customer);
+
         return "add";
     }
 
